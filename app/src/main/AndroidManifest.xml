@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Masterdetailsviewapifilter">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.master.MasterActivity"
             android:exported="false" />
         <activity
             android:name=".activities.splash.SplashActivity"

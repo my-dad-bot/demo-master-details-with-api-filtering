@@ -12,4 +12,5 @@ class SplashViewModel @Inject constructor(
     @ApplicationContext context: Context,
     private val appPreference: AppPreference
 ) : BaseViewModel() {
+
 }
