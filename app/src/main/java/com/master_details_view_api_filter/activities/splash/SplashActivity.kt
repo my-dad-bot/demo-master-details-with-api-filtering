@@ -1,13 +1,10 @@
 package com.master_details_view_api_filter.activities.splash
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import com.google.android.material.snackbar.Snackbar
-import com.master_details_view_api_filter.MainActivity
-import com.master_details_view_api_filter.R
+import com.master_details_view_api_filter.activities.master.MasterActivity
 import com.master_details_view_api_filter.databinding.ActivitySplashBinding
 import com.shohoz.superApp.base.ui.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,7 +15,7 @@ class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding> (Act
         super.onCreate(savedInstanceState)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, MasterActivity::class.java))
         }, 3000)
     }
 

@@ -22,7 +22,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object HttpModule {
 
-    val base_url = "https://www.themealdb.com/api/json/v1/1/"
+    private const val base_url = "https://www.themealdb.com/api/json/v1/1/"
 
     @Provides
     @Singleton
@@ -43,6 +43,7 @@ object HttpModule {
     @Provides
     fun provideOkHttpClient(@ApplicationContext context: Context, cache: Cache): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.HEADERS; HttpLoggingInterceptor.Level.BODY
 
         val okHttpClient = OkHttpClient.Builder()
             .connectTimeout(100, TimeUnit.SECONDS)

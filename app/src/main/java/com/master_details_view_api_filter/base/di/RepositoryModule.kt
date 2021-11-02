@@ -1,4 +1,5 @@
 package com.master_details_view_api_filter.base.di
+import com.master_details_view_api_filter.base.api.meal_api.MealApiImpl
 import com.master_details_view_api_filter.base.api.meal_api.MealApiRepository
 import dagger.Module
 import dagger.Provides
@@ -12,6 +13,6 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideMealsRepository(mealsRepository: MealApiRepository): MealApiRepository = mealsRepository
+    fun provideMealsRepository(mealrepoImpl: MealApiImpl): MealApiRepository = mealrepoImpl
 
 }

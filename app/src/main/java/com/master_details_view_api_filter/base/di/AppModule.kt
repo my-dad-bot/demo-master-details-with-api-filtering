@@ -19,9 +19,4 @@ object AppModule {
     @Singleton
     fun providePreference(@ApplicationContext context: Context): AppPreference = AppPreference(context)
 
-    @Provides
-    @Singleton
-    fun provideCoroutineContext(): CoroutineContext {
-        return Dispatchers.IO
-    }
 }
