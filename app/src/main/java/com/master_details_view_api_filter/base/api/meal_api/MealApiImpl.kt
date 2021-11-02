@@ -1,5 +1,6 @@
 package com.master_details_view_api_filter.base.api.meal_api
 
+import com.master_details_view_api_filter.base.data.remote.FilteredMeal
 import com.master_details_view_api_filter.base.data.remote.MealByCategory
 import com.master_details_view_api_filter.base.data.remote.MealsByArea
 import retrofit2.Response
@@ -11,4 +12,10 @@ class MealApiImpl @Inject constructor(private val mealApiService: MealApiService
         mealApiService.getMealByCategory(query)
 
     override suspend fun getMealByArea(query: String): Response<MealsByArea> = mealApiService.getMealByArea(query)
+
+    override suspend fun getMealBySelectionArea(query: String): Response<FilteredMeal> = mealApiService.getMealBySelectedArea(query)
+
+    override suspend fun getMealBySelectionCategory(query: String): Response<FilteredMeal> = mealApiService.getMealBySelectedCategory(query)
+
+
 }

@@ -1,15 +1,11 @@
 package com.master_details_view_api_filter.activities.master
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.master_details_view_api_filter.base.api.meal_api.MealApiRepository
-import com.master_details_view_api_filter.base.data.local.AppPreference
-import com.master_details_view_api_filter.base.data.remote.MealByCategory
-import com.master_details_view_api_filter.base.data.remote.MealsByArea
+import com.master_details_view_api_filter.base.data.remote.*
 import com.shohoz.superApp.base.ui.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,23 +16,78 @@ class MasterViewModel @Inject constructor(
     var categoryResponse = MutableLiveData<MealByCategory>()
     var areaResponse = MutableLiveData<MealsByArea>()
 
-    fun getMealsByCategory()= viewModelScope.launch (handler) {
-        mealApiRepository.getMealByCategory("list").let{
-            if (it.isSuccessful){
+    var mealByFilterArea = MutableLiveData<FilteredMeal>()
+    var mealByFilterCategory = MutableLiveData<FilteredMeal>()
+
+    var areasItem = mutableListOf<String>()
+    var categoryItem = mutableListOf<String>()
+
+    var areaData = MutableLiveData<MutableList<String>>()
+    var categotyData = MutableLiveData<MutableList<String>>()
+
+    fun getMealsByCategory() = viewModelScope.launch(handler) {
+        loader.value = true
+        mealApiRepository.getMealByCategory("list").let {
+            if (it.isSuccessful) {
+                loader.value = false
                 categoryResponse.value = it.body();
-            }else{
+                getCategorySpinnerData(it.body()!!.meals)
+            } else {
                 messages.value = it.message();
             }
         }
     }
 
-    fun getMealsByArea()= viewModelScope.launch (handler) {
-        mealApiRepository.getMealByArea("list").let{
-            if (it.isSuccessful){
-                areaResponse.value = it.body();
-            }else{
+    fun getMealByFilterArea(string: String) = viewModelScope.launch(handler) {
+        loader.value = true
+        mealApiRepository.getMealBySelectionArea(string).let {
+            if (it.isSuccessful) {
+                loader.value = false
+                mealByFilterArea.value = it.body();
+            } else {
                 messages.value = it.message();
             }
         }
     }
+
+    fun getMealByFilterCategory(string: String) = viewModelScope.launch(handler) {
+        loader.value = true
+        mealApiRepository.getMealBySelectionCategory(string).let {
+            if (it.isSuccessful) {
+                loader.value = false
+                mealByFilterCategory.value = it.body();
+            } else {
+                messages.value = it.message();
+            }
+        }
+    }
+
+    fun getMealsByArea() = viewModelScope.launch(handler) {
+        loader.value = true
+        mealApiRepository.getMealByArea("list").let {
+            if (it.isSuccessful) {
+                loader.value = false
+                areaResponse.value = it.body();
+                getAreaSpinnerData(it.body()!!.meals)
+            } else {
+                messages.value = it.message();
+            }
+        }
+    }
+
+    private fun getCategorySpinnerData(meals: List<MealC>) {
+        for (i in meals.indices) {
+            categoryItem.add(meals[i].strCategory)
+        }
+
+        categotyData.value = categoryItem
+    }
+
+    private fun getAreaSpinnerData(meals: List<MealA>) {
+        for (i in meals.indices) {
+            areasItem.add(meals[i].strArea)
+        }
+        areaData.value = areasItem
+    }
+
 }

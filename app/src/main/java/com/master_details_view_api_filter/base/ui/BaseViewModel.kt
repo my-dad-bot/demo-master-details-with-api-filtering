@@ -12,8 +12,10 @@ private const val TAG = "BaseViewModel"
 open class BaseViewModel : ViewModel() {
 
     val messages = MutableLiveData<String>()
+    val loader = MutableLiveData<Boolean>()
 
     val handler = CoroutineExceptionHandler { _, exception ->
+        loader.value = false
         run {
             messages.value = exception.message
             exception.printStackTrace()

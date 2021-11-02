@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="@dimen/_74sdp"
-        android:layout_height="@dimen/_74sdp"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
         android:layout_gravity="center"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
+        app:lottie_fileName="loading-animation.json"
         app:lottie_autoPlay="true"
         app:lottie_loop="true" />
 
