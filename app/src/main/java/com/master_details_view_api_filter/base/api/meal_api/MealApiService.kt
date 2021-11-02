@@ -7,14 +7,12 @@ import retrofit2.http.*
 
 interface MealApiService {
     @GET("list.php")
-    @FormUrlEncoded
     suspend fun getMealByCategory(
         @Query("c") query: String,
     ): Response<MealByCategory>
 
 
     @GET("list.php")
-    @FormUrlEncoded
     suspend fun getMealByArea(
         @Query("a") query: String,
     ): Response<MealsByArea>
