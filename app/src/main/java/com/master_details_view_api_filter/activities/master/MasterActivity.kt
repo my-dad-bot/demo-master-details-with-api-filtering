@@ -1,18 +1,15 @@
 package com.master_details_view_api_filter.activities.master
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.CallLog
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
-import com.master_details_view_api_filter.activities.splash.SplashViewModel
+import androidx.recyclerview.widget.GridLayoutManager
 import com.master_details_view_api_filter.base.ui.observeLiveData
 import com.master_details_view_api_filter.databinding.ActivityMasterBinding
-import com.master_details_view_api_filter.databinding.ActivitySplashBinding
 import com.shohoz.superApp.base.ui.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -80,14 +77,19 @@ class MasterActivity :
     override fun onObserveLiveData() {
         observeLiveData(viewModel.areaResponse) {
             Log.v(TAG, "Area Response: ${it.meals}")
+
         }
 
         observeLiveData(viewModel.mealByFilterArea) {
-            Log.v(TAG, "Area filter: ${it.meals[0]}")
+            binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
+            val adapter = MasterRecyclerAdapter(this, it)
+            binding.recyclerView.adapter = adapter
         }
 
         observeLiveData(viewModel.mealByFilterCategory) {
-            Log.v(TAG, "Category filter: ${it.meals[0]}")
+            binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
+            val adapter = MasterRecyclerAdapter(this, it)
+            binding.recyclerView.adapter = adapter
         }
 
         observeLiveData(viewModel.categoryResponse) {

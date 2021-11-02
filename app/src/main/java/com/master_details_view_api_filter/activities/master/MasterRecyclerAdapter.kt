@@ -4,33 +4,33 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.master_details_view_api_filter.R
 import com.master_details_view_api_filter.base.data.remote.FilteredMeal
 
-class MasterRecyclerAdapter
-constructor(
+class MasterRecyclerAdapter(
     private val context: Context,
-    private var foodlist: ArrayList<FilteredMeal>
+    private var foodlist: FilteredMeal
 ) : RecyclerView.Adapter<MasterRecyclerAdapter.MealViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealViewHolder {
         return MealViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.each_row, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_food, parent, false)
         )
     }
 
     override fun onBindViewHolder(holder: MealViewHolder, position: Int) {
-        val user = userList[position]
-        holder.name.text = user.name
-        holder.age.text = user.age.toString()
+        holder.textView.text = foodlist.meals[position].strMeal
     }
 
-    override fun getItemCount(): Int = userList.size
+    override fun getItemCount(): Int = foodlist.meals.size
 
     class MealViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+        val imageView: ImageView = itemView.findViewById(R.id.imageFood)
+        val textView: TextView = itemView.findViewById(R.id.textView)
     }
 
 }

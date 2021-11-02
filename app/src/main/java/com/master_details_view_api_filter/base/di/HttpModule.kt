@@ -43,7 +43,8 @@ object HttpModule {
     @Provides
     fun provideOkHttpClient(@ApplicationContext context: Context, cache: Cache): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.HEADERS; HttpLoggingInterceptor.Level.BODY
+        loggingInterceptor.level =
+            HttpLoggingInterceptor.Level.HEADERS; HttpLoggingInterceptor.Level.BODY
 
         val okHttpClient = OkHttpClient.Builder()
             .connectTimeout(100, TimeUnit.SECONDS)
@@ -61,11 +62,14 @@ object HttpModule {
     @Singleton
     @Provides
     fun provideClient(
-        gson: Gson
+        gson: Gson,
+        @ApplicationContext context: Context,
+        cache: Cache
     ): MealApiService {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
             .baseUrl(base_url)
+            .client(provideOkHttpClient(context, cache))
             .build().create(MealApiService::class.java)
     }
 /*
