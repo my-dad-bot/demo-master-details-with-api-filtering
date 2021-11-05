@@ -1,5 +1,6 @@
 package com.master_details_view_api_filter.base.api.meal_api
 
+import com.master_details_view_api_filter.base.data.remote.FetchMealById
 import com.master_details_view_api_filter.base.data.remote.FilteredMeal
 import com.master_details_view_api_filter.base.data.remote.MealByCategory
 import com.master_details_view_api_filter.base.data.remote.MealsByArea
@@ -27,4 +28,9 @@ interface MealApiService {
     suspend fun getMealBySelectedArea(
         @Query("a") query: String,
     ): Response<FilteredMeal>
+
+    @GET("lookup.php?")
+    suspend fun getMealById(
+        @Query("i") query: String,
+    ): Response<FetchMealById>
 }
