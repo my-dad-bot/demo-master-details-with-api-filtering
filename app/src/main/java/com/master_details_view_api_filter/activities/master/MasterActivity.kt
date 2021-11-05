@@ -19,8 +19,6 @@ private const val TAG = "MasterActivity"
 class MasterActivity :
     BaseActivity<MasterViewModel, ActivityMasterBinding>(ActivityMasterBinding::inflate) {
 
-    var areaSpinnerSelectdValue: String? = null
-    var categotySpinnerSelectdValue: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +35,8 @@ class MasterActivity :
 
     private fun initUI() {
 
-        binding.spinnerArea.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.spinnerArea.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
@@ -48,7 +47,7 @@ class MasterActivity :
                 position: Int,
                 id: Long
             ) {
-                Log.v(TAG, "AREA ${parent!!.getItemAtPosition(position)}")
+                Log.v(TAG, "AREA SPINNER ${parent!!.getItemAtPosition(position)}")
                 viewModel.getMealByFilterArea(parent.getItemAtPosition(position).toString())
             }
 
@@ -66,7 +65,7 @@ class MasterActivity :
                     position: Int,
                     id: Long
                 ) {
-                    Log.v(TAG, "Category ${parent!!.getItemAtPosition(position)}")
+                    Log.v(TAG, "Category SPINNER ${parent!!.getItemAtPosition(position)}")
                     viewModel.getMealByFilterCategory(parent.getItemAtPosition(position).toString())
                 }
 
@@ -76,8 +75,6 @@ class MasterActivity :
 
     override fun onObserveLiveData() {
         observeLiveData(viewModel.areaResponse) {
-            Log.v(TAG, "Area Response: ${it.meals}")
-
         }
 
         observeLiveData(viewModel.mealByFilterArea) {
