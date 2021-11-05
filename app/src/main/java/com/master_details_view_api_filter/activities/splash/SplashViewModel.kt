@@ -8,8 +8,5 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 @HiltViewModel
-class SplashViewModel @Inject constructor(
-    @ApplicationContext context: Context,
-    private val appPreference: AppPreference
-) : BaseViewModel() {
+class SplashViewModel @Inject constructor() : BaseViewModel() {
 }

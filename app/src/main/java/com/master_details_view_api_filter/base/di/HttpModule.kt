@@ -4,7 +4,7 @@ import android.content.Context
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.master_details_view_api_filter.base.data.local.AppPreference
+import com.master_details_view_api_filter.base.api.meal_api.MealApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,6 +21,8 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object HttpModule {
+
+    private const val base_url = "https://www.themealdb.com/api/json/v1/1/"
 
     @Provides
     @Singleton
@@ -41,6 +43,7 @@ object HttpModule {
     @Provides
     fun provideOkHttpClient(@ApplicationContext context: Context, cache: Cache): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
 
         val okHttpClient = OkHttpClient.Builder()
             .connectTimeout(100, TimeUnit.SECONDS)
@@ -55,21 +58,20 @@ object HttpModule {
     }
 
 
-/*
     @Singleton
     @Provides
     fun provideClient(
-        okHttpClient: OkHttpClient,
         gson: Gson,
-        appPreference: AppPreference
-    ): IAMService {
+        @ApplicationContext context: Context,
+        cache: Cache
+    ): MealApiService {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .baseUrl(BuildConfig.IAM_BASE_URL)
-            .client(okhttpClientWithOAuth(okHttpClient, appPreference))
-            .build().create(IAMService::class.java)
+            .baseUrl(base_url)
+            .client(provideOkHttpClient(context, cache))
+            .build().create(MealApiService::class.java)
     }
-
+/*
     private fun okhttpClientWithOAuth(
         okHttpClient: OkHttpClient,
         appPreference: AppPreference

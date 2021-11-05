@@ -14,6 +14,7 @@ import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.master_details_view_api_filter.base.ui.CustomAnimatedLoader
 import com.master_details_view_api_filter.base.ui.FragmentCommunicator
+import com.master_details_view_api_filter.base.ui.observeLiveData
 import java.lang.reflect.ParameterizedType
 
 
@@ -60,6 +61,10 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding>(val bindingFac
                 supportActionBar?.setDisplayHomeAsUpEnabled(false)
                 supportActionBar?.setHomeButtonEnabled(false)
             }
+        }
+
+        observeLiveData(viewModel.messages) {
+            showSnackBar(it, Snackbar.LENGTH_SHORT)
         }
     }
 
