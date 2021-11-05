@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.master_details_view_api_filter.R
 import com.master_details_view_api_filter.base.data.remote.FilteredMeal
+import com.master_details_view_api_filter.utils.load
 
 class MasterRecyclerAdapter(
     private val context: Context,
@@ -24,6 +25,8 @@ class MasterRecyclerAdapter(
 
     override fun onBindViewHolder(holder: MealViewHolder, position: Int) {
         holder.textView.text = foodlist.meals[position].strMeal
+        holder.imageView.load(foodlist.meals[position].strMealThumb)
+
     }
 
     override fun getItemCount(): Int = foodlist.meals.size
